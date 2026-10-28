@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Bridget's professional To-Do List Dashboard"
+    >
+
+    <title>Bridget To-Do List</title>
+
+
+    <!-- Google Font -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <!-- =====================================================
+         SIDEBAR OVERLAY
+    ====================================================== -->
+
+    <div class="sidebar-overlay"></div>
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-logo">
+
+            <div class="sidebar-logo-icon">
+
+                <i class="fa-solid fa-check-double"></i>
+
+            </div>
+
+            <div>
+                Bridget<span>Tasks</span>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a
+                href="#"
+                class="sidebar-link active"
+                data-section="dashboard"
+            >
+
+                <i class="fa-solid fa-house"></i>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="sidebar-link"
+                data-section="tasks"
+            >
+
+                <i class="fa-solid fa-list-check"></i>
+
+                <span>
+                    My Tasks
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="sidebar-link"
+                data-section="upcoming"
+            >
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                <span>
+                    Upcoming Tasks
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="sidebar-link"
+                data-section="today"
+            >
+
+                <i class="fa-solid fa-book-open"></i>
+
+                <span>
+                    Today's Task
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="sidebar-link"
+                data-section="analytics"
+            >
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <span>
+                    Analytics
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="sidebar-link"
+                data-section="settings"
+            >
+
+                <i class="fa-solid fa-gear"></i>
+
+                <span>
+                    Settings
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- =================================================
+             SIDEBAR BOTTOM
+        ================================================== -->
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-user">
+
+                <div class="sidebar-user-avatar">
+                    BP
+                </div>
+
+                <div>
+
+                    <h4>
+                        Bridget Pais
+                    </h4>
+
+                    <p>
+                        Personal Workspace
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="sidebarCollapse"
+                class="collapse-button"
+            >
+                <i class="fa-solid fa-angles-left"></i>
+                <span>Collapse</span>
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button
+                    type="button"
+                    class="icon-button mobile-sidebar-toggle"
+                    id="mobileSidebarToggle"
+                    aria-label="Open menu"
+                >
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+
+                <div class="topbar-title">
+
+                    <h1 id="pageTitle">
+                        Dashboard
+                    </h1>
+
+                    <p id="pageSubtitle">
+                        Stay organized. Get things done.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <button
+                    type="button"
+                    class="icon-button"
+                    id="notificationButton"
+                    aria-label="Notifications"
+                >
+
+                    <i class="fa-regular fa-bell"></i>
+
+                    <span
+                        class="notification-dot"
+                        id="notificationDot"
+                    ></span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="icon-button"
+                    id="themeToggle"
+                    aria-label="Toggle dark and light mode"
+                >
+
+                    <span class="theme-icon">
+                        🌙
+                    </span>
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =====================================================
+             DASHBOARD
+        ====================================================== -->
+
+        <section
+            class="dashboard-section active"
+            id="dashboard"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Good day, Bridget 👋
+                    </h2>
+
+                    <p>
+                        Here's a quick overview of your productivity.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    id="dashboardAddTask"
+                >
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Add Task
+
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 STATS
+            ================================================== -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-label">
+                            Total Tasks
+                        </span>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-list-check"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h3 id="totalTasks">
+                        0
+                    </h3>
+
+                    <p>
+                        All tasks in your workspace
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-label">
+                            Completed
+                        </span>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h3 id="completedTasks">
+                        0
+                    </h3>
+
+                    <p>
+                        Tasks successfully finished
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-label">
+                            Remaining
+                        </span>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-hourglass-half"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h3 id="remainingTasks">
+                        0
+                    </h3>
+
+                    <p>
+                        Tasks still waiting for you
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-label">
+                            Progress
+                        </span>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-chart-pie"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h3 id="progressPercentage">
+                        0%
+                    </h3>
+
+                    <p>
+                        Overall completion rate
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 DASHBOARD CHARTS
+            ================================================== -->
+
+            <div class="dashboard-grid">
+
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                Task Progress
+                            </h3>
+
+                            <p>
+                                Completed vs remaining tasks
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-container">
+
+                        <div class="progress-chart-wrapper">
+                            <canvas id="progressChart"></canvas>
+
+                            <div class="progress-center">
+                                <strong id="analyticsProgress">0%</strong>
+                                <span>Complete</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                Weekly Activity
+                            </h3>
+
+                            <p>
+                                Tasks completed this week
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="weekly-chart-wrapper">
+                        <canvas id="weeklyPerformanceChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PROJECT DEADLINE
+            ================================================== -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h3>
+                            Project Submission Deadline
+                        </h3>
+
+                        <p>
+                            Set when you want to submit your project.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <form
+                    id="deadlineForm"
+                    class="deadline-form"
+                >
+
+                    <div class="form-group">
+
+                        <label for="deadlineTitle">
+                            Project / Submission Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="deadlineTitle"
+                            maxlength="120"
+                            placeholder="e.g. Portfolio Project Submission"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="deadlineDate">
+                                Submission Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="deadlineDate"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="deadlineTime">
+                                Submission Time
+                            </label>
+
+                            <input
+                                type="time"
+                                id="deadlineTime"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="deadline-actions">
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+
+                            <i class="fa-solid fa-calendar-check"></i>
+
+                            Save Deadline
+
+                        </button>
+
+
+                        <span
+                            id="deadlineMessage"
+                            class="form-message"
+                        ></span>
+
+                    </div>
+
+                </form>
+
+
+                <div
+                    class="saved-deadline"
+                    id="savedDeadline"
+                >
+
+                    <div>
+
+                        <span class="stat-label">
+                            Current deadline
+                        </span>
+
+                        <h3 id="savedDeadlineTitle">
+                            No deadline set
+                        </h3>
+
+                        <p id="savedDeadlineDate">
+                            Choose a project date and time above.
+                        </p>
+
+                    </div>
+
+
+                    <i class="fa-solid fa-flag-checkered"></i>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             MY TASKS
+        ====================================================== -->
+
+        <section
+            class="dashboard-section"
+            id="tasks"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        My Tasks
+                    </h2>
+
+                    <p>
+                        Add, edit, complete and organize your tasks.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+
+                <!-- QUICK ADD -->
+
+                <div class="quick-add">
+
+                    <div class="quick-add-field">
+
+                        <input
+                            type="text"
+                            id="quickAddTask"
+                            maxlength="120"
+                            placeholder="Enter your task"
+                        >
+
+                        <span id="quickTaskCounter">
+                            0/120
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="primary-button"
+                        id="quickAddButton"
+                    >
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Add Task
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- TASK FILTERS -->
+
+                <div class="task-toolbar">
+
+                    <div class="task-filters">
+
+                        <button
+                            type="button"
+                            class="task-filter active"
+                            data-filter="all"
+                        >
+                            All
+                        </button>
+
+                        <button
+                            type="button"
+                            class="task-filter"
+                            data-filter="pending"
+                        >
+                            Pending
+                        </button>
+
+                        <button
+                            type="button"
+                            class="task-filter"
+                            data-filter="in-progress"
+                        >
+                            In Progress
+                        </button>
+
+                        <button
+                            type="button"
+                            class="task-filter"
+                            data-filter="completed"
+                        >
+                            Completed
+                        </button>
+
+                    </div>
+
+
+                    <div class="search-box">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input
+                            type="search"
+                            id="taskSearch"
+                            placeholder="Search tasks..."
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PRIORITY FILTERS -->
+
+                <div class="task-actions">
+
+                    <div class="priority-filters">
+
+                        <button
+                            type="button"
+                            class="task-filter active"
+                            data-priority="all"
+                        >
+                            All Priority
+                        </button>
+
+                        <button
+                            type="button"
+                            class="task-filter"
+                            data-priority="high"
+                        >
+                            High
+                        </button>
+
+                        <button
+                            type="button"
+                            class="task-filter"
+                            data-priority="medium"
+                        >
+                            Medium
+                        </button>
+
+                        <button
+                            type="button"
+                            class="task-filter"
+                            data-priority="low"
+                        >
+                            Low
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        id="clearCompleted"
+                    >
+
+                        <i class="fa-solid fa-broom"></i>
+
+                        Clear Completed
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- TASK LIST -->
+
+                <div
+                    class="tasks-list"
+                    id="tasksList"
+                ></div>
+
+
+                <div
+                    class="empty-state"
+                    id="taskEmptyState"
+                    hidden
+                >
+
+                    <i class="fa-regular fa-clipboard"></i>
+
+                    <h3>
+                        No tasks found
+                    </h3>
+
+                    <p>
+                        Add a task or change your filters.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             UPCOMING TASKS
+        ====================================================== -->
+
+        <section
+            class="dashboard-section"
+            id="upcoming"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Upcoming Tasks
+                    </h2>
+
+                    <p>
+                        See your submission schedule in date and time order.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="upcoming-grid">
+
+
+                <!-- ================= CALENDAR ================= -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                Calendar
+                            </h3>
+
+                            <p>
+                                Select a date to view what is coming up.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="calendar-box">
+
+                        <div class="calendar-header">
+
+                            <button
+                                type="button"
+                                class="icon-button"
+                                id="previousMonth"
+                                aria-label="Previous month"
+                            >
+
+                                <i class="fa-solid fa-chevron-left"></i>
+
+                            </button>
+
+
+                            <strong id="calendarMonth">
+                                Month Year
+                            </strong>
+
+
+                            <button
+                                type="button"
+                                class="icon-button"
+                                id="nextMonth"
+                                aria-label="Next month"
+                            >
+
+                                <i class="fa-solid fa-chevron-right"></i>
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="calendar-weekdays">
+
+                            <span>Sun</span>
+                            <span>Mon</span>
+                            <span>Tue</span>
+                            <span>Wed</span>
+                            <span>Thu</span>
+                            <span>Fri</span>
+                            <span>Sat</span>
+
+                        </div>
+
+
+                        <div
+                            class="calendar-days"
+                            id="calendarDays"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================= NEAREST SUBMISSIONS ================= -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                Nearest Submissions
+                            </h3>
+
+                            <p>
+                                Sorted by date first, then time.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="upcoming-list"
+                        id="upcomingList"
+                    >
+
+                        <div class="empty-state">
+
+                            <i class="fa-regular fa-calendar-xmark"></i>
+
+                            <h3>
+                                No upcoming submissions
+                            </h3>
+
+                            <p>
+                                Set a project deadline from the Dashboard.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================= UPCOMING FOOTER ACTIONS ================= -->
+
+                    <div class="upcoming-footer-actions">
+
+                        <button
+                            type="button"
+                            class="secondary-button"
+                            id="clearCompletedUpcoming"
+                        >
+
+                            <i class="fa-solid fa-broom"></i>
+
+                            Clear Completed
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             TODAY'S TASK / JOURNAL
+        ====================================================== -->
+
+        <section
+            class="dashboard-section"
+            id="today"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Today's Task
+                    </h2>
+
+                    <p>
+                        Write your day like a personal digital diary.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+
+                <div class="journal-toolbar">
+
+                    <div class="form-group">
+
+                        <label for="journalDate">
+                            Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="journalDate"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="journalTime">
+                            Time
+                        </label>
+
+                        <input
+                            type="time"
+                            id="journalTime"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="journal-editor">
+
+                    <div class="journal-heading">
+
+                        <div>
+
+                            <h3 id="journalHeading">
+                                Today's Notes
+                            </h3>
+
+                            <p>
+                                Record what happened, what you completed, ideas, achievements, or anything you want to remember.
+                            </p>
+
+                        </div>
+
+
+                        <i class="fa-solid fa-pen-to-square"></i>
+
+                    </div>
+
+
+                    <textarea
+                        id="journalText"
+                        maxlength="3000"
+                        placeholder="Write what happened today...
+
+You can write about your college work, projects, meetings, tasks completed, ideas, achievements, or anything you want to remember."
+                    ></textarea>
+
+
+                    <div class="journal-counter">
+
+                        <span>
+                            Personal diary entry
+                        </span>
+
+                        <strong id="journalCount">
+                            0/3000
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    id="saveJournal"
+                >
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Save Diary Entry
+
+                </button>
+
+
+                <span
+                    id="journalMessage"
+                    class="form-message"
+                ></span>
+
+
+                <div class="journal-history">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                Saved Entries
+                            </h3>
+
+                            <p>
+                                Your entries are stored in this browser.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="journalHistory"
+                        class="journal-history-list"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             ANALYTICS
+        ====================================================== -->
+
+        <section
+            class="dashboard-section"
+            id="analytics"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Analytics
+                    </h2>
+
+                    <p>
+                        Understand your task completion progress.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-grid">
+
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                Completion Overview
+                            </h3>
+
+                            <p>
+                                Current task completion percentage.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-container">
+
+                        <div class="progress-chart-wrapper">
+
+                            <canvas
+                                id="analyticsProgressChart"
+                            ></canvas>
+
+
+                            <div class="progress-center">
+
+                                <strong
+                                    id="analyticsProgressLarge"
+                                >
+                                    0%
+                                </strong>
+
+                                <span>
+                                    Complete
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                Weekly Performance
+                            </h3>
+
+                            <p>
+                                Completed tasks by day.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="weekly-chart-wrapper">
+                        <canvas id="weeklyActivityChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <span class="stat-label">
+                        Total
+                    </span>
+
+                    <h3 id="analyticsTotal">
+                        0
+                    </h3>
+
+                    <p>
+                        Total tasks
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-label">
+                        Completed
+                    </span>
+
+                    <h3 id="analyticsCompleted">
+                        0
+                    </h3>
+
+                    <p>
+                        Finished tasks
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-label">
+                        Pending
+                    </span>
+
+                    <h3 id="analyticsPending">
+                        0
+                    </h3>
+
+                    <p>
+                        Remaining tasks
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-label">
+                        Rate
+                    </span>
+
+                    <h3 id="analyticsRate">
+                        0%
+                    </h3>
+
+                    <p>
+                        Completion rate
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             SETTINGS
+        ====================================================== -->
+
+        <section
+            class="dashboard-section"
+            id="settings"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Settings
+                    </h2>
+
+                    <p>
+                        Customize how your dashboard looks and behaves.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-grid">
+
+
+                <!-- APPEARANCE -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                Appearance
+                            </h3>
+
+                            <p>
+                                Choose your preferred interface brightness.
+                            </p>
+
+                        </div>
+
+
+                        <i class="fa-solid fa-sliders"></i>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div>
+
+                            <strong>
+                                Brightness
+                            </strong>
+
+                            <p>
+                                Move the slider from dark to bright.
+                            </p>
+
+                        </div>
+
+
+                        <div class="brightness-control">
+
+                            <i class="fa-solid fa-moon"></i>
+
+
+                            <input
+                                type="range"
+                                id="brightnessRange"
+                                min="0"
+                                max="100"
+                                value="50"
+                            >
+
+
+                            <i class="fa-solid fa-sun"></i>
+
+
+                            <strong id="brightnessValue">
+                                50%
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div>
+
+                            <strong>
+                                Theme
+                            </strong>
+
+                            <p>
+                                Quickly switch between dark and light mode.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="secondary-button"
+                            id="settingsThemeToggle"
+                        >
+
+                            <i class="fa-solid fa-circle-half-stroke"></i>
+
+                            Toggle Theme
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- WORKSPACE -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                Workspace
+                            </h3>
+
+                            <p>
+                                Browser-only productivity data.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div>
+
+                            <strong>
+                                Stored locally
+                            </strong>
+
+                            <p>
+                                Tasks, deadlines and diary entries stay in localStorage.
+                            </p>
+
+                        </div>
+
+
+                        <i class="fa-solid fa-database setting-icon"></i>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div>
+
+                            <strong>
+                                Reset workspace
+                            </strong>
+
+                            <p>
+                                Remove saved task, deadline and diary data.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="danger-button"
+                            id="resetWorkspace"
+                        >
+                            Reset
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             FOOTER
+        ====================================================== -->
+
+        <footer class="footer">
+
+            <p>
+                © 2026 Bridget. All Rights Reserved.
+            </p>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     NOTIFICATIONS PANEL
+========================================================= -->
+
+<div
+    class="notification-panel"
+    id="notificationPanel"
+    aria-hidden="true"
+>
+
+    <div class="notification-panel-header">
+
+        <div>
+
+            <h3>
+                Notifications
+            </h3>
+
+            <p>
+                Recent reminders and activity
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="icon-button"
+            id="closeNotifications"
+            aria-label="Close notifications"
+        >
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+    </div>
+
+
+    <div
+        class="notification-list"
+        id="notificationList"
+    >
+
+        <div class="empty-state">
+
+            <i class="fa-regular fa-bell"></i>
+
+            <h3>
+                No new notifications
+            </h3>
+
+            <p>
+                You're all caught up.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     TASK EDIT MODAL
+========================================================= -->
+
+<div
+    class="modal-overlay"
+    id="taskModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3>
+                    Edit Task
+                </h3>
+
+                <p>
+                    Update the task details.
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="icon-button"
+                id="closeTaskModal"
+                aria-label="Close"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <form id="editTaskForm">
+
+            <input
+                type="hidden"
+                id="editingTaskId"
+            >
+
+
+            <div class="form-group">
+
+                <label for="editTaskTitle">
+                    Task
+                </label>
+
+                <input
+                    type="text"
+                    id="editTaskTitle"
+                    maxlength="120"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="editTaskStatus">
+                        Status
+                    </label>
+
+                    <select id="editTaskStatus">
+
+                        <option value="pending">
+                            Pending
+                        </option>
+
+                        <option value="in-progress">
+                            In Progress
+                        </option>
+
+                        <option value="completed">
+                            Completed
+                        </option>
+
+                        <option value="delayed">
+                            Delayed
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="editTaskPriority">
+                        Priority
+                    </label>
+
+                    <select id="editTaskPriority">
+
+                        <option value="low">
+                            Low
+                        </option>
+
+                        <option value="medium">
+                            Medium
+                        </option>
+
+                        <option value="high">
+                            High
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    id="cancelTaskEdit"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    class="toast"
+    id="toast"
+>
+
+    <i class="fa-solid fa-circle-check"></i>
+
+    <span id="toastMessage">
+        Saved successfully.
+    </span>
+
+</div>
+
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
